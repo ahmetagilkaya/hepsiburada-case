@@ -2,6 +2,7 @@ package tr.com.hepsiburada.rest_api.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 import tr.com.hepsiburada.core.enumeration.ResponseType;
 import tr.com.hepsiburada.model.dto.repository.BestSellerProductsDTO;
@@ -24,6 +25,7 @@ public class BestSellerServiceImpl implements BestSellerService {
     private final EndpointResponseHelper endpointResponseHelper;
 
     @Override
+    @Transactional(readOnly = true)
     public ProductViewDTO getBestSellerProductsByUser(String userId) {
         List<MostThreeCategoriesDTO> mostThreeCategoriesDTOList = productViewService.mostThreeCategoriesInUserHistory(userId);
         List<String> mostThreeCategoryIds = mostThreeCategoriesDTOList.stream().map((mostThreeCategoriesDTO -> mostThreeCategoriesDTO.get_id().get(0))).collect(Collectors.toList());

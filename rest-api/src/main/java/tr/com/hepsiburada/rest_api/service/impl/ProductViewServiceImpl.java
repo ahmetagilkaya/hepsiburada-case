@@ -69,6 +69,7 @@ public class ProductViewServiceImpl implements ProductViewService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<MostThreeCategoriesDTO> mostThreeCategoriesInUserHistory(String userId) {
         return productViewRepository.mostThreeCategoriesInUserHistory(userId).getMappedResults();
     }

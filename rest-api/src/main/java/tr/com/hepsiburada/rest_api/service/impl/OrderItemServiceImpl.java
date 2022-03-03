@@ -3,6 +3,7 @@ package tr.com.hepsiburada.rest_api.service.impl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.server.ResponseStatusException;
 import tr.com.hepsiburada.model.document.OrderItem;
@@ -20,6 +21,7 @@ public class OrderItemServiceImpl implements OrderItemService {
     private final OrderItemRepository orderItemRepository;
 
     @Override
+    @Transactional(readOnly = true)
     public OrderItem findById(Integer documentId) {
         return orderItemRepository
                 .findById(documentId)
@@ -27,31 +29,37 @@ public class OrderItemServiceImpl implements OrderItemService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<OrderItem> findAll() {
         return orderItemRepository.findAll();
     }
 
     @Override
+    @Transactional
     public OrderItem save(OrderItem document) {
         return orderItemRepository.save(document);
     }
 
     @Override
+    @Transactional
     public OrderItem update(OrderItem document) {
         return orderItemRepository.save(document);
     }
 
     @Override
+    @Transactional
     public void delete(OrderItem document) {
         orderItemRepository.delete(document);
     }
 
     @Override
+    @Transactional
     public void deleteById(Integer documentId) {
         orderItemRepository.deleteById(documentId);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<BestSellerProductsDTO> personalizedBestSeller10Products(List<String> categoryIds) {
         if (CollectionUtils.isEmpty(categoryIds)) {
             return new ArrayList<>();
@@ -66,6 +74,7 @@ public class OrderItemServiceImpl implements OrderItemService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<BestSellerProductsDTO> nonPersonalizedBestSeller10Products() {
         return orderItemRepository.nonPersonalizedBestSeller10Products().getMappedResults();
     }
